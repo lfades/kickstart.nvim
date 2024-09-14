@@ -3,6 +3,7 @@
 
 return {
   'nvim-neo-tree/neo-tree.nvim',
+  enabled = true,
   version = '*',
   dependencies = {
     'nvim-lua/plenary.nvim',
@@ -11,13 +12,20 @@ return {
   },
   cmd = 'Neotree',
   keys = {
-    { '\\', ':Neotree reveal<CR>', desc = 'NeoTree reveal' },
+    { '<leader>n', ':Neotree reveal_force_cwd<CR>', desc = 'NeoTree reveal (cwd)' },
   },
   opts = {
     filesystem = {
+      follow_current_file = {
+        enabled = true,
+      },
       window = {
         mappings = {
-          ['\\'] = 'close_window',
+          ['<space>'] = 'none',
+          ['<cr>'] = 'none',
+          ['l'] = 'open',
+          ['L'] = 'focus_preview',
+          ['h'] = 'close_node',
         },
       },
     },

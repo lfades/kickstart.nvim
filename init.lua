@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -102,7 +102,7 @@ vim.g.have_nerd_font = false
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -157,6 +157,9 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
+vim.opt.colorcolumn = '80'
+vim.opt.tabstop = 4
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -164,8 +167,21 @@ vim.opt.scrolloff = 10
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+vim.keymap.set('n', '<leader>cr', function()
+  local path = vim.fn.expand '%'
+  vim.fn.setreg('+', path)
+  vim.notify('Copied "' .. path .. '" to the clipboard!')
+end, { desc = 'Copy relative path of the current file to the clipboard' })
+
+vim.keymap.set('n', '<leader>cp', function()
+  local path = vim.fn.expand '%:p'
+  vim.fn.setreg('+', path)
+  vim.notify('Copied "' .. path .. '" to the clipboard!')
+end, { desc = 'Copy absolute path of the current file to the clipboard' })
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>dk', vim.diagnostic.open_float, { desc = 'LSP: Show diagnostics under cursor' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -229,6 +245,9 @@ vim.opt.rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
+  --
+  -- To validate the settings set in a file run:
+  -- :verbose set tabstop? expandtab? shiftwidth? endofline?
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
   -- NOTE: Plugins can also be added by using a table,
@@ -279,13 +298,13 @@ require('lazy').setup({
 
       -- Document existing key chains
       require('which-key').add {
+        { '<leader>h', group = '[H]arpoon' },
         { '<leader>c', group = '[C]ode' },
         { '<leader>d', group = '[D]ocument' },
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
         { '<leader>w', group = '[W]orkspace' },
         { '<leader>t', group = '[T]oggle' },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       }
     end,
   },
@@ -352,7 +371,12 @@ require('lazy').setup({
         --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
         --   },
         -- },
-        -- pickers = {}
+        pickers = {
+          find_files = {
+            -- `hidden = true` will still show the inside of `.git/` as it's not `.gitignore`d.
+            find_command = { 'rg', '--files', '--hidden', '--glob', '!**/.git/*' },
+          },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -367,6 +391,7 @@ require('lazy').setup({
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
+      vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommands' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
@@ -418,6 +443,7 @@ require('lazy').setup({
   { 'Bilal2453/luvit-meta', lazy = true },
   {
     -- Main LSP Configuration
+    -- Run :LspInfo to know more about the language server for the current file
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
@@ -574,13 +600,11 @@ require('lazy').setup({
         -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-        --
-        -- Some languages (like typescript) have entire language plugins that can be useful:
-        --    https://github.com/pmizio/typescript-tools.nvim
-        --
-        -- But for many setups, the LSP (`tsserver`) will work just fine
-        -- tsserver = {},
-        --
+
+        -- TypeScript LSP: https://github.com/yioneko/vtsls
+        vtsls = {},
+
+        biome = {},
 
         lua_ls = {
           -- cmd = {...},
@@ -661,7 +685,10 @@ require('lazy').setup({
         -- python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = { "prettierd", "prettier", stop_after_first = true },
+        javascript = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+        typescript = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+        typescriptreact = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+        json = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
       },
     },
   },
@@ -782,19 +809,51 @@ require('lazy').setup({
     end,
   },
 
+  {
+    'sainnhe/sonokai',
+    enabled = false,
+    lazy = false,
+    priority = 1000,
+    config = function()
+      -- Optionally configure and load the colorscheme
+      -- directly inside the plugin declaration.
+      vim.g.sonokai_style = 'espresso'
+      vim.g.sonokai_enable_italic = true
+      vim.g.sonokai_transparent_background = 1
+      vim.g.sonokai_current_word = 'underline'
+      vim.cmd.colorscheme 'sonokai'
+    end,
+  },
+
+  {
+    'sainnhe/gruvbox-material',
+    enabled = false,
+    lazy = false,
+    priority = 1000,
+    config = function()
+      -- Optionally configure and load the colorscheme
+      -- directly inside the plugin declaration.
+      vim.g.gruvbox_material_background = 'soft'
+      vim.g.gruvbox_material_enable_italic = true
+      vim.g.gruvbox_material_transparent_background = 1
+      vim.cmd.colorscheme 'gruvbox-material'
+    end,
+  },
+
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
     -- change the command in the config to whatever the name of that colorscheme is.
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
     'folke/tokyonight.nvim',
+    enabled = false,
+    lazy = false,
     priority = 1000, -- Make sure to load this before all the other start plugins.
     init = function()
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
       vim.cmd.colorscheme 'tokyonight-night'
-
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
     end,
@@ -805,7 +864,58 @@ require('lazy').setup({
 
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
+    keys = {
+      {
+        '<leader>e',
+        function()
+          require('mini.files').open(vim.api.nvim_buf_get_name(0), true)
+        end,
+        desc = 'Open mini.files in the current directory',
+      },
+      {
+        '<leader>E',
+        function()
+          require('mini.files').open(vim.uv.cwd(), true)
+        end,
+        desc = 'Open mini.files (cwd)',
+      },
+    },
     config = function()
+      require('mini.files').setup {
+        mappings = {
+          close = 'q',
+          go_in = 'l',
+          go_in_plus = 'L',
+          -- The difference between go_out and go_out_plus is that with plus you only
+          -- get one item in the left.
+          -- Default h
+          go_out = 'H',
+          -- Default H
+          go_out_plus = 'h',
+          -- Default <BS>
+          reset = ',',
+          reveal_cwd = '.',
+          show_help = 'g?',
+          -- Default =
+          synchronize = 's',
+          trim_left = '<',
+          trim_right = '>',
+        },
+        windows = {
+          preview = true,
+          width_focus = 30,
+          width_preview = 30,
+        },
+        options = {
+          -- Whether to use for editing directories
+          -- Disabled by default in LazyVim because neo-tree is used for that
+          use_as_default_explorer = true,
+          -- If set to false, files are moved to the trash directory in:
+          -- /Users/fades/.local/share/nvim/mini.files/trash
+          permanent_delete = false,
+        },
+      }
+
       -- Better Around/Inside textobjects
       --
       -- Examples:
@@ -844,7 +954,19 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      ensure_installed = {
+        'bash',
+        'c',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'query',
+        'vim',
+        'vimdoc',
+      },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -854,7 +976,7 @@ require('lazy').setup({
         --  the list of additional_vim_regex_highlighting and disabled languages for indent.
         additional_vim_regex_highlighting = { 'ruby' },
       },
-      indent = { enable = true, disable = { 'ruby' } },
+      indent = { enable = true, disable = { 'ruby', 'typescript', 'javascript' } },
     },
     config = function(_, opts)
       -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
@@ -883,8 +1005,8 @@ require('lazy').setup({
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
@@ -892,7 +1014,7 @@ require('lazy').setup({
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
