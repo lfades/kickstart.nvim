@@ -8,6 +8,7 @@ return {
     windows = {
       width = 50,
     },
+    hints = { enabled = true },
   },
   -- if you want to download pre-built binary, then pass source=false. Make sure to follow instruction above.
   -- Also note that downloading prebuilt binary is a lot faster comparing to compiling from source.

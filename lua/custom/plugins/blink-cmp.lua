@@ -98,6 +98,18 @@ return {
     },
 
     completion = {
+      -- Useful for transparency mode
+      documentation = {
+        window = {
+          border = 'rounded',
+        },
+      },
+      -- Useful for transparency mode
+      menu = {
+        draw = { treesitter = { 'lsp' } },
+        border = 'rounded',
+      },
+
       accept = {
         auto_brackets = {
           enabled = true,
@@ -109,6 +121,12 @@ return {
     },
 
     -- experimental signature help support
-    signature = { enabled = true },
+    signature = {
+      enabled = true,
+      -- Useful for transparency mode
+      window = {
+        border = 'rounded',
+      },
+    },
   },
 }
