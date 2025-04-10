@@ -6,7 +6,7 @@ return {
   opts = {
     -- add any opts here
     windows = {
-      width = 50,
+      width = 40,
     },
     hints = { enabled = true },
   },
@@ -14,6 +14,7 @@ return {
   -- Also note that downloading prebuilt binary is a lot faster comparing to compiling from source.
   build = ':AvanteBuild source=false',
   dependencies = {
+    'nvim-treesitter/nvim-treesitter',
     'stevearc/dressing.nvim',
     'nvim-lua/plenary.nvim',
     'MunifTanjim/nui.nvim',
