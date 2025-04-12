@@ -53,6 +53,7 @@ return {
           enabled = true,
           size = 1 * 1024 * 1024, -- 1MB
         },
+        dashboard = {},
       }
 
       -- Disable conflicting keymap
