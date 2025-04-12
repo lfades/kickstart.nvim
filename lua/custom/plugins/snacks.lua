@@ -56,9 +56,6 @@ return {
         dashboard = {},
       }
 
-      -- Disable conflicting keymap
-      vim.keymap.set('n', '<leader>e', '<Nop>', { desc = 'Disabled for mini.files' })
-
       -- GIT KEYMAPS
       vim.keymap.set('n', '<leader>gl', function()
         Snacks.picker.git_log {
