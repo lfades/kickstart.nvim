@@ -58,6 +58,15 @@ return {
 
       -- GIT KEYMAPS
       vim.keymap.set('n', '<leader>gl', function()
+        Snacks.picker.git_log_file {
+          finder = 'git_log',
+          format = 'git_log',
+          preview = 'git_show',
+          confirm = 'git_checkout',
+        }
+      end, { desc = '[G]it [l]og file' })
+
+      vim.keymap.set('n', '<leader>gL', function()
         Snacks.picker.git_log {
           finder = 'git_log',
           format = 'git_log',
@@ -65,9 +74,9 @@ return {
           confirm = 'git_checkout',
           layout = 'vertical',
         }
-      end, { desc = 'Git [L]og' })
+      end, { desc = '[G]it [L]og' })
 
-      vim.keymap.set('n', '<leader>gb', function()
+      vim.keymap.set('n', '<leader>gB', function()
         Snacks.picker.git_branches {
           layout = 'select',
         }
