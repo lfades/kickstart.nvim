@@ -98,7 +98,7 @@ return {
         }
       end, { desc = '[S]earch [F]iles' })
 
-      vim.keymap.set('n', '<leader><leader>', function()
+      vim.keymap.set('n', '<leader>.', function()
         Snacks.picker.buffers {
           -- I always want my buffers picker to start in normal mode
           on_show = function()
@@ -120,11 +120,13 @@ return {
           },
           layout = 'ivy',
         }
-      end, { desc = '[ ] Find existing buffers' })
+      end, { desc = '[.] Find existing buffers' })
 
-      vim.keymap.set('n', '<leader>s.', function()
-        Snacks.picker.recent()
-      end, { desc = '[S]earch Recent Files ("." for repeat)' })
+      vim.keymap.set('n', '<leader><leader>', function()
+        Snacks.picker.recent {
+          layout = 'vertical',
+        }
+      end, { desc = '[ ] Find Recent Files' })
 
       vim.keymap.set('n', '<leader>sg', function()
         Snacks.picker.grep()

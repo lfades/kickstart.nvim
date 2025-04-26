@@ -9,6 +9,15 @@ return {
       width = 40,
     },
     hints = { enabled = true },
+    claude = {
+      endpoint = 'https://api.anthropic.com',
+      model = 'claude-3-5-sonnet-20241022',
+      timeout = 30000, -- Timeout in milliseconds
+      temperature = 0,
+      max_tokens = 4096,
+      -- disable_tools = true, -- disable tools!
+      disabled_tools = { 'python', 'git_commit', 'bash', 'web_search', 'fetch' },
+    },
   },
   -- if you want to download pre-built binary, then pass source=false. Make sure to follow instruction above.
   -- Also note that downloading prebuilt binary is a lot faster comparing to compiling from source.
