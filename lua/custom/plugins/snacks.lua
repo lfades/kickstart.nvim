@@ -173,8 +173,16 @@ return {
       end, { desc = '[S]earch [/]history' })
 
       vim.keymap.set('n', '<leader>su', function()
-        Snacks.picker.undo()
+        Snacks.picker.undo {
+          layout = 'vertical',
+        }
       end, { desc = '[S]earch [U]ndo history' })
+
+      vim.keymap.set('n', "<leader>s'", function()
+        Snacks.picker.registers {
+          layout = 'vertical',
+        }
+      end, { desc = "[S]earch [']registers" })
 
       vim.keymap.set('n', '<leader>sr', function()
         Snacks.picker.resume()

@@ -16,6 +16,13 @@ return {
       inc_rename = false, -- enables an input dialog for inc-rename.nvim
       lsp_doc_border = true,
     },
+    -- Show the @recording messaage of macros.
+    routes = {
+      {
+        view = 'notify',
+        filter = { event = 'msg_showmode' },
+      },
+    },
   },
   dependencies = {
     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
