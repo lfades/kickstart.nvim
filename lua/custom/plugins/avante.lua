@@ -3,20 +3,30 @@ return {
   enabled = true,
   event = 'VeryLazy',
   lazy = false,
+  version = false,
   opts = {
-    -- add any opts here
     windows = {
       width = 40,
     },
     hints = { enabled = true },
+    ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
+    provider = 'claude',
     claude = {
-      endpoint = 'https://api.anthropic.com',
-      model = 'claude-3-5-sonnet-20241022',
       timeout = 30000, -- Timeout in milliseconds
       temperature = 0,
       max_tokens = 4096,
-      -- disable_tools = true, -- disable tools!
       disabled_tools = { 'python', 'git_commit', 'bash', 'web_search', 'fetch' },
+    },
+    behaviour = {
+      auto_suggestions = false,
+      auto_set_highlight_group = true,
+      auto_set_keymaps = true,
+      auto_apply_diff_after_generation = false,
+      support_paste_from_clipboard = false,
+      minimize_diff = true, -- Whether to remove unchanged lines when applying a code block
+      enable_token_counting = true, -- Whether to enable token counting. Default to true.
+      enable_cursor_planning_mode = false, -- Whether to enable Cursor Planning Mode. Default to false.
+      enable_claude_text_editor_tool_mode = false, -- Whether to enable Claude Text Editor Tool Mode.
     },
   },
   -- if you want to download pre-built binary, then pass source=false. Make sure to follow instruction above.
