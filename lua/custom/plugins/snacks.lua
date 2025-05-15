@@ -193,7 +193,9 @@ return {
       end, { desc = '[S]earch [D]iagnostics' })
 
       vim.keymap.set('n', '<leader>sD', function()
-        Snacks.picker.diagnostics_buffer()
+        Snacks.picker.diagnostics_buffer {
+          layout = 'ivy_split',
+        }
       end, { desc = '[S]earch buffer [D]iagnostics' })
 
       vim.keymap.set('n', '<leader>sn', function()
