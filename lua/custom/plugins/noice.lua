@@ -8,6 +8,9 @@ return {
         ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
         ['vim.lsp.util.stylize_markdown'] = true,
       },
+      signature = {
+        enabled = false,
+      },
     },
     presets = {
       bottom_search = true, -- use a classic bottom cmdline for search
@@ -16,11 +19,25 @@ return {
       inc_rename = false, -- enables an input dialog for inc-rename.nvim
       lsp_doc_border = true,
     },
-    -- Show the @recording messaage of macros.
+    -- Show the @recording message of macros.
     routes = {
       {
         view = 'notify',
         filter = { event = 'msg_showmode' },
+      },
+    },
+    commands = {
+      -- Makes the history command show all messages, including "echo"
+      history = {
+        filter = {
+          any = {
+            {
+              cond = function(_)
+                return true
+              end,
+            },
+          },
+        },
       },
     },
   },

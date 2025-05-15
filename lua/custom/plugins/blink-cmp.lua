@@ -124,13 +124,11 @@ return {
       },
     },
 
-    -- experimental signature help support
     signature = {
       enabled = true,
-      -- -- Useful for transparency mode
-      -- window = {
-      --   border = 'rounded',
-      -- },
+      window = {
+        border = 'rounded',
+      },
     },
   },
 }
