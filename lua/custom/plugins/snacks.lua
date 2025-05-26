@@ -161,7 +161,7 @@ return {
       end, { desc = '[S]earch [Q]uickfix List' })
 
       vim.keymap.set('n', '<leader>sC', function()
-        Snacks.picker.colorschemes()
+        Snacks.picker.colorschemes { layout = 'ivy' }
       end, { desc = '[S]earch [C]olorschemes' })
 
       vim.keymap.set('n', '<leader>sh', function()
