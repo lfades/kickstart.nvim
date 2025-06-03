@@ -739,19 +739,21 @@ require('lazy').setup({
   {
     'folke/tokyonight.nvim',
     lazy = false,
+    enabled = false,
     priority = 1000,
     opts = {},
   },
   {
-    'sainnhe/sonokai',
+    'sainnhe/everforest',
     lazy = false,
     priority = 1000,
+    enabled = false,
     config = function()
       -- Optionally configure and load the colorscheme
       -- directly inside the plugin declaration.
-      vim.g.sonokai_enable_italic = true
-      vim.g.sonokai_style = 'shusia'
-      vim.cmd.colorscheme 'sonokai'
+      vim.g.everforest_enable_italic = true
+      vim.o.background = 'light'
+      -- vim.cmd.colorscheme 'everforest'
     end,
   },
   --

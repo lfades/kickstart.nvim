@@ -11,16 +11,22 @@ return {
     hints = { enabled = true },
     ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
     provider = 'gemini',
-    gemini = {
-      -- model = 'gemini-2.5-pro-preview-03-25',
-      model = 'gemini-2.5-flash-preview-04-17',
-      -- disable_tools = true,
-    },
-    claude = {
-      timeout = 30000, -- Timeout in milliseconds
-      temperature = 0,
-      max_tokens = 4096,
-      disabled_tools = { 'python', 'git_commit', 'bash', 'web_search', 'fetch' },
+    providers = {
+      gemini = {
+        -- model = 'gemini-2.5-pro-preview-03-25',
+        model = 'gemini-2.5-flash-preview-04-17',
+        -- extra_request_body = {
+        --   disable_tools = true,
+        -- },
+      },
+      claude = {
+        timeout = 30000, -- Timeout in milliseconds
+        extra_request_body = {
+          temperature = 0,
+          max_tokens = 4096,
+          disabled_tools = { 'python', 'git_commit', 'bash', 'web_search', 'fetch' },
+        },
+      },
     },
     behaviour = {
       auto_suggestions = false,
