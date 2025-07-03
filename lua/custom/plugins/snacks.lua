@@ -129,7 +129,9 @@ return {
       end, { desc = '[ ] Find Recent Files' })
 
       vim.keymap.set('n', '<leader>sg', function()
-        Snacks.picker.grep()
+        Snacks.picker.grep {
+          layout = 'vertical',
+        }
       end, { desc = '[S]earch by [G]rep' })
 
       vim.keymap.set('n', '<leader>/', function()
@@ -141,7 +143,9 @@ return {
       end, { desc = '[S]earch by grep in [B]uffers' })
 
       vim.keymap.set('n', '<leader>sw', function()
-        Snacks.picker.grep_word()
+        Snacks.picker.grep_word {
+          layout = 'vertical',
+        }
       end, { desc = '[S]earch current [W]ord' })
 
       vim.keymap.set('n', '<leader>:', function()

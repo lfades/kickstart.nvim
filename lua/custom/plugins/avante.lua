@@ -9,12 +9,11 @@ return {
       width = 40,
     },
     hints = { enabled = true },
-    ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
     provider = 'gemini',
     providers = {
       gemini = {
         -- model = 'gemini-2.5-pro-preview-03-25',
-        model = 'gemini-2.5-flash-preview-04-17',
+        model = 'gemini-2.5-flash-preview-05-20',
         -- extra_request_body = {
         --   disable_tools = true,
         -- },
