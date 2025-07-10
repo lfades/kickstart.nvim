@@ -165,6 +165,12 @@ vim.opt.tabstop = 4
 -- See `:help 'confirm'`
 vim.opt.confirm = true
 
+-- Makes Vim update the file by copying the buffer directly over the original file
+-- rather than using the default “write new file, delete old, rename new” method.
+-- This is useful for file watchers that watch for changes and get confusef if
+-- the file is deleted (Hi Bun).
+vim.opt.backupcopy = 'yes'
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
