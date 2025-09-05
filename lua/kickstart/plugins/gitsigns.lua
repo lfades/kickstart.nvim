@@ -41,22 +41,22 @@ return {
 
       -- Actions
       -- visual mode
-      map('v', '<leader>ghs', function()
-        gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
-      end, { desc = 'git [s]tage hunk' })
-      map('v', '<leader>hr', function()
-        gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
-      end, { desc = 'git [r]eset hunk' })
+      -- map('v', '<leader>ghs', function()
+      --   gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
+      -- end, { desc = 'git [s]tage hunk' })
+      -- map('v', '<leader>hr', function()
+      --   gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
+      -- end, { desc = 'git [r]eset hunk' })
       -- normal mode
-      map('n', '<leader>gs', gitsigns.stage_hunk, { desc = '[G]it [s]tage hunk' })
-      map('n', '<leader>gS', gitsigns.stage_buffer, { desc = '[G]it [S]tage buffer' })
-      map('n', '<leader>gr', gitsigns.reset_hunk, { desc = '[G]it [r]eset hunk' })
+      -- map('n', '<leader>gs', gitsigns.stage_hunk, { desc = '[G]it [s]tage hunk' })
+      -- map('n', '<leader>gS', gitsigns.stage_buffer, { desc = '[G]it [S]tage buffer' })
+      -- map('n', '<leader>gr', gitsigns.reset_hunk, { desc = '[G]it [r]eset hunk' })
       -- Removes from stage all changes in the active buffer
       map('n', '<leader>gu', gitsigns.reset_buffer_index, { desc = '[G]it [u]ndo stage hunk' })
       -- Removes the non-staged changes in the active buffer
       map('n', '<leader>gR', gitsigns.reset_buffer, { desc = 'git [R]eset buffer' })
       map('n', '<leader>gb', gitsigns.blame_line, { desc = 'git [b]lame line' })
-      map('n', '<leader>gd', gitsigns.diffthis, { desc = 'git [d]iff against index' })
+      -- map('n', '<leader>gd', gitsigns.diffthis, { desc = 'git [d]iff against index' })
       map('n', '<leader>gD', function()
         gitsigns.diffthis '@'
       end, { desc = 'git [D]iff against last commit' })

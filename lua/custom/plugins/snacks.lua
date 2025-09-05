@@ -16,6 +16,9 @@ return {
           },
           layout = {
             cycle = false,
+            preset = function()
+              return vim.o.columns >= 120 and 'default' or 'vertical'
+            end,
           },
           matcher = {
             frecency = true,
@@ -57,14 +60,18 @@ return {
       }
 
       -- GIT KEYMAPS
-      vim.keymap.set('n', '<leader>gl', function()
+      vim.keymap.set('n', '<leader>gf', function()
         Snacks.picker.git_log_file {
           finder = 'git_log',
           format = 'git_log',
           preview = 'git_show',
           confirm = 'git_checkout',
         }
-      end, { desc = '[G]it [l]og file' })
+      end, { desc = '[G]it log [f]ile' })
+
+      vim.keymap.set('n', '<leader>gl', function()
+        Snacks.picker.git_log_line()
+      end, { desc = '[g]it log [l]ine' })
 
       vim.keymap.set('n', '<leader>gL', function()
         Snacks.picker.git_log {
@@ -72,7 +79,6 @@ return {
           format = 'git_log',
           preview = 'git_show',
           confirm = 'git_checkout',
-          layout = 'vertical',
         }
       end, { desc = '[G]it [L]og' })
 
@@ -82,11 +88,25 @@ return {
         }
       end, { desc = '[B]ranches' })
 
+      vim.keymap.set('n', '<leader>gg', function()
+        Snacks.picker.git_grep()
+      end, { desc = '[g]it [g]rep files' })
+
+      vim.keymap.set('n', '<leader>gd', function()
+        Snacks.picker.git_diff()
+      end, { desc = '[g]it [d]iff against index' })
+
+      vim.keymap.set('n', '<leader>gS', function()
+        Snacks.picker.git_stash()
+      end, { desc = '[g]it [S]tash' })
+
+      vim.keymap.set('n', '<leader>gs', function()
+        Snacks.picker.git_status()
+      end, { desc = '[g]it [s]tatus' })
+
       -- SEARCH KEYMAPS
       vim.keymap.set('n', '<leader>sk', function()
-        Snacks.picker.keymaps {
-          layout = 'vertical',
-        }
+        Snacks.picker.keymaps {}
       end, { desc = '[S]earch [K]eymaps' })
 
       vim.keymap.set('n', '<leader>sf', function()
@@ -123,15 +143,11 @@ return {
       end, { desc = '[.] Find existing buffers' })
 
       vim.keymap.set('n', '<leader><leader>', function()
-        Snacks.picker.recent {
-          layout = 'vertical',
-        }
+        Snacks.picker.recent {}
       end, { desc = '[ ] Find Recent Files' })
 
       vim.keymap.set('n', '<leader>sg', function()
-        Snacks.picker.grep {
-          layout = 'vertical',
-        }
+        Snacks.picker.grep()
       end, { desc = '[S]earch by [G]rep' })
 
       vim.keymap.set('n', '<leader>/', function()
@@ -143,9 +159,7 @@ return {
       end, { desc = '[S]earch by grep in [B]uffers' })
 
       vim.keymap.set('n', '<leader>sw', function()
-        Snacks.picker.grep_word {
-          layout = 'vertical',
-        }
+        Snacks.picker.grep_word()
       end, { desc = '[S]earch current [W]ord' })
 
       vim.keymap.set('n', '<leader>:', function()
@@ -177,15 +191,11 @@ return {
       end, { desc = '[S]earch [/]history' })
 
       vim.keymap.set('n', '<leader>su', function()
-        Snacks.picker.undo {
-          layout = 'vertical',
-        }
+        Snacks.picker.undo {}
       end, { desc = '[S]earch [U]ndo history' })
 
       vim.keymap.set('n', "<leader>s'", function()
-        Snacks.picker.registers {
-          layout = 'vertical',
-        }
+        Snacks.picker.registers {}
       end, { desc = "[S]earch [']registers" })
 
       vim.keymap.set('n', '<leader>sr', function()
@@ -210,11 +220,6 @@ return {
       -- vim.keymap.set('n', '<leader>se', function()
       --   Snacks.explorer()
       -- end, { desc = 'File [E]xplorer' })
-
-      -- LAZYGIT
-      vim.keymap.set('n', '<leader>gg', function()
-        Snacks.lazygit()
-      end, { desc = 'Lazy[G]it' })
 
       -- LSP
       vim.keymap.set('n', 'gd', function()
