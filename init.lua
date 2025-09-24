@@ -190,6 +190,9 @@ vim.keymap.set('n', '<leader>cp', function()
   vim.notify('Copied "' .. path .. '" to the clipboard!')
 end, { desc = 'Copy absolute path of the current file to the clipboard' })
 
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true, silent = true })
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true, silent = true })
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 vim.keymap.set('n', '<leader>dk', vim.diagnostic.open_float, { desc = 'Show [D]iagnostics under the cursor' })
@@ -402,7 +405,16 @@ require('lazy').setup({
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
       -- Useful status updates for LSP.
-      { 'j-hui/fidget.nvim', opts = {} },
+      {
+        'j-hui/fidget.nvim',
+        opts = {
+          notification = {
+            window = {
+              max_width = 0, -- `0` means no maximum width.
+            },
+          },
+        },
+      },
 
       -- Allows extra capabilities provided by blink.cmp
       'saghen/blink.cmp',
@@ -668,10 +680,10 @@ require('lazy').setup({
         python = { 'black' },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
-        javascript = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
-        typescript = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
-        typescriptreact = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
-        json = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+        javascript = { 'biome', 'biome-organize-imports' },
+        typescript = { 'biome', 'biome-organize-imports' },
+        typescriptreact = { 'biome', 'biome-organize-imports' },
+        json = { 'biome' },
         -- javascript = { 'prettierd', 'biome', 'prettier', stop_after_first = true },
         -- typescript = { 'prettierd', 'biome', 'prettier', stop_after_first = true },
         -- typescriptreact = { 'prettierd', 'biome', 'prettier', stop_after_first = true },
@@ -743,23 +755,37 @@ require('lazy').setup({
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   { import = 'custom.plugins' },
   {
-    'folke/tokyonight.nvim',
-    lazy = false,
-    enabled = false,
-    priority = 1000,
-    opts = {},
+    'everviolet/nvim',
+    name = 'evergarden',
+    priority = 1000, -- Colorscheme plugin is loaded first before any other plugins
+    opts = {
+      theme = {
+        variant = 'fall', -- 'winter'|'fall'|'spring'|'summer'
+        accent = 'green',
+      },
+      editor = {
+        transparent_background = false,
+        sign = { color = 'none' },
+        float = {
+          color = 'mantle',
+          solid_border = false,
+        },
+        completion = {
+          color = 'surface0',
+        },
+      },
+    },
   },
   {
-    'sainnhe/everforest',
+    'sainnhe/gruvbox-material',
     lazy = false,
     priority = 1000,
-    enabled = false,
+    enabled = true,
     config = function()
-      -- Optionally configure and load the colorscheme
-      -- directly inside the plugin declaration.
-      vim.g.everforest_enable_italic = true
-      vim.o.background = 'light'
-      -- vim.cmd.colorscheme 'everforest'
+      vim.g.gruvbox_material_enable_italic = true
+      vim.g.gruvbox_material_background = 'soft' -- soft | medium | hard
+      vim.o.background = 'dark'
+      -- vim.cmd.colorscheme 'gruvbox-material'
     end,
   },
   --

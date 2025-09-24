@@ -6,6 +6,7 @@ return {
       options = {
         component_separators = '',
         section_separators = { left = '', right = '' },
+        theme = 'everforest',
       },
       sections = {
         lualine_a = { { 'mode', separator = { left = '' }, right_padding = 2 } },
