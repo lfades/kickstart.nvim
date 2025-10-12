@@ -777,16 +777,28 @@ require('lazy').setup({
     },
   },
   {
-    'sainnhe/gruvbox-material',
+    'rebelot/kanagawa.nvim',
     lazy = false,
     priority = 1000,
     enabled = true,
-    config = function()
-      vim.g.gruvbox_material_enable_italic = true
-      vim.g.gruvbox_material_background = 'soft' -- soft | medium | hard
-      vim.o.background = 'dark'
-      -- vim.cmd.colorscheme 'gruvbox-material'
-    end,
+  },
+  {
+    'bluz71/vim-moonfly-colors',
+    name = 'moonfly',
+    lazy = false,
+    priority = 1000,
+  },
+  {
+    'vague-theme/vague.nvim',
+    lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other plugins
+    -- config = function()
+    --   -- NOTE: you do not need to call setup if you don't want to.
+    --   require('vague').setup {
+    --     -- optional configuration here
+    --   }
+    --   vim.cmd 'colorscheme vague'
+    -- end,
   },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
