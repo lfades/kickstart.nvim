@@ -574,7 +574,7 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        black = {}, -- Python formatter
+        -- black = {}, -- Python formatter
         pyright = {}, -- Python LSP
         rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -663,14 +663,10 @@ require('lazy').setup({
           return nil
         else
           return {
-            timeout_ms = 500,
+            timeout_ms = 1500,
             lsp_format = 'fallback',
           }
         end
-        return {
-          timeout_ms = 1500,
-          lsp_format = lsp_format_opt,
-        }
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
