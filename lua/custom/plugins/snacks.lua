@@ -26,7 +26,9 @@ return {
           formatters = {
             file = {
               filename_first = true, -- display filename before the file path
-              truncate = 80,
+              ---@type "left"|"center"|"right"
+              truncate = 'center',
+              min_width = 80,
             },
           },
         },
@@ -88,8 +90,11 @@ return {
         }
       end, { desc = '[B]ranches' })
 
+      -- vim.keymap.set('n', '<leader>gg', function()
+      --   Snacks.picker.git_grep()
+      -- end, { desc = '[g]it [g]rep files' })
       vim.keymap.set('n', '<leader>gg', function()
-        Snacks.picker.git_grep()
+        Snacks.lazygit()
       end, { desc = '[g]it [g]rep files' })
 
       vim.keymap.set('n', '<leader>gd', function()
