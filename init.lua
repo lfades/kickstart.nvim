@@ -114,9 +114,7 @@ vim.o.showmode = false
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.schedule(function()
-  vim.o.clipboard = 'unnamedplus'
-end)
+vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 
 -- Enable break indent
 vim.o.breakindent = true
@@ -162,7 +160,7 @@ vim.o.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.o.scrolloff = 10
 
-vim.opt.colorcolumn = '80'
+vim.opt.colorcolumn = '100'
 vim.opt.tabstop = 4
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
@@ -238,9 +236,7 @@ vim.keymap.set('n', '<C-S-k>', '<C-w>K', { desc = 'Move window to the upper' })
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-  callback = function()
-    vim.hl.on_yank()
-  end,
+  callback = function() vim.hl.on_yank() end,
 })
 
 -- [[ Install `lazy.nvim` plugin manager ]]
@@ -249,9 +245,7 @@ local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
   local out = vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
-  if vim.v.shell_error ~= 0 then
-    error('Error cloning lazy.nvim:\n' .. out)
-  end
+  if vim.v.shell_error ~= 0 then error('Error cloning lazy.nvim:\n' .. out) end
 end
 
 ---@type vim.Option
@@ -527,9 +521,7 @@ require('lazy').setup({
           --
           -- This may be unwanted, since they displace some of your code
           if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
-            map('<leader>th', function()
-              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
-            end, '[T]oggle Inlay [H]ints')
+            map('<leader>th', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, '[T]oggle Inlay [H]ints')
           end
         end,
       })
@@ -594,8 +586,10 @@ require('lazy').setup({
         -- TypeScript LSP: https://github.com/yioneko/vtsls
         vtsls = {},
 
-        biome = {}, -- JS/TS formatter
-        prettierd = {}, -- JS/TS formatter
+        oxfmt = {},
+        oxlint = {}, -- JS/TS formatter
+        -- biome = {}, -- JS/TS formatter
+        -- prettierd = {}, -- JS/TS formatter
         djlint = {},
 
         lua_ls = {
@@ -657,9 +651,7 @@ require('lazy').setup({
     keys = {
       {
         '<leader>f',
-        function()
-          require('conform').format { async = true, lsp_format = 'fallback' }
-        end,
+        function() require('conform').format { async = true, lsp_format = 'fallback' } end,
         mode = '',
         desc = '[F]ormat buffer',
       },
@@ -688,10 +680,18 @@ require('lazy').setup({
         python = { 'black' },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
-        javascript = { 'biome', 'biome-organize-imports' },
-        typescript = { 'biome', 'biome-organize-imports' },
-        typescriptreact = { 'biome', 'biome-organize-imports' },
-        json = { 'biome' },
+        javascript = { 'oxfmt' },
+        javascriptreact = { 'oxfmt' },
+        typescript = { 'oxfmt' },
+        typescriptreact = { 'oxfmt' },
+        json = { 'oxfmt' },
+        vue = { 'oxfmt' },
+        -- Biome
+        -- javascript = { 'biome', 'biome-organize-imports' },
+        -- typescript = { 'biome', 'biome-organize-imports' },
+        -- typescriptreact = { 'biome', 'biome-organize-imports' },
+        -- json = { 'biome' },
+        -- Prettier
         -- javascript = { 'prettierd', 'biome', 'prettier', stop_after_first = true },
         -- typescript = { 'prettierd', 'biome', 'prettier', stop_after_first = true },
         -- typescriptreact = { 'prettierd', 'biome', 'prettier', stop_after_first = true },
