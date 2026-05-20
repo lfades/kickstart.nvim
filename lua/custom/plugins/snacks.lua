@@ -37,6 +37,15 @@ return {
             width = 0,
             height = 0,
           },
+          config = {
+            os = {
+              editPreset = '',
+              edit = [[[ -z "$NVIM" ] && (nvim -- {{filename}}) || (nvim --server "$NVIM" --remote {{filename}} && nvim --server "$NVIM" --remote-send "<C-\><C-n>:lua for _,w in ipairs(vim.api.nvim_list_wins()) do if vim.bo[vim.api.nvim_win_get_buf(w)].filetype:match('snacks') then vim.api.nvim_win_close(w,true) end end<CR>")]],
+              editAtLine = [[[ -z "$NVIM" ] && (nvim +{{line}} -- {{filename}}) || (nvim --server "$NVIM" --remote {{filename}} && nvim --server "$NVIM" --remote-send ":{{line}}<CR>" && nvim --server "$NVIM" --remote-send "<C-\><C-n>:lua for _,w in ipairs(vim.api.nvim_list_wins()) do if vim.bo[vim.api.nvim_win_get_buf(w)].filetype:match('snacks') then vim.api.nvim_win_close(w,true) end end<CR>")]],
+              editInTerminal = false,
+              editAtLineInTerminal = false,
+            },
+          },
         },
         notifier = {
           enabled = true,
