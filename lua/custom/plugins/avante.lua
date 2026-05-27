@@ -1,4 +1,4 @@
-return {
+if false then return {
   'yetone/avante.nvim',
   enabled = false,
   event = 'VeryLazy',
@@ -75,4 +75,4 @@ return {
       ft = { 'markdown', 'Avante' },
     },
   },
-}
+} end

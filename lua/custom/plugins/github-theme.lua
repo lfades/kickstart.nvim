@@ -1,4 +1,4 @@
-return {
+if false then return {
   'projekt0n/github-nvim-theme',
   enabled = false,
   name = 'github-theme',
@@ -7,4 +7,4 @@ return {
     require('github-theme').setup()
     vim.cmd.colorscheme 'github_dark_default'
   end,
-}
+} end

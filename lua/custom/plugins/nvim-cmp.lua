@@ -1,6 +1,6 @@
 -- Autocompletion
 -- Currently not used.
-return {
+if false then return {
   'hrsh7th/nvim-cmp',
   enabled = false,
   event = 'InsertEnter',
@@ -115,4 +115,4 @@ return {
       },
     }
   end,
-}
+} end

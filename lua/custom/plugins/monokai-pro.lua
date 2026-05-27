@@ -1,4 +1,4 @@
-return {
+if false then return {
   'loctvl842/monokai-pro.nvim',
   enabled = false,
   priority = 1000,
@@ -9,4 +9,4 @@ return {
     }
     vim.cmd.colorscheme 'monokai-pro'
   end,
-}
+} end
