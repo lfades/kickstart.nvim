@@ -793,7 +793,6 @@ do
   vim.list_extend(ensure_installed, {
     'oxfmt',
     'oxlint',
-    'djlint',
     -- You can add other tools here that you want Mason to install
   })
 
@@ -834,7 +833,6 @@ do
     -- You can also specify external formatters in here.
     formatters_by_ft = {
       lua = { 'stylua' },
-      html = { 'djlint' },
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },
       python = { 'black' },
